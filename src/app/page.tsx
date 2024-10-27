@@ -1,5 +1,4 @@
-import { Categories, Container, Title } from "@/components/shared";
-import { Button } from "@/components/ui/button";
+import { Categories, Container, SortPopup, Title } from "@/components/shared";
 
 export default function Home() {
   return (
@@ -8,6 +7,7 @@ export default function Home() {
          <Title text="All pizzas" size="lg" className="font-extrabold" />
 
          <Categories />
+         <SortPopup />
       </Container>
    </>
   );
