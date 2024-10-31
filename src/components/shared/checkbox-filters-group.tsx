@@ -11,7 +11,7 @@ interface Props {
    items: Item[];
    defaultItems?: Item[];
    limit?: number;
-   searchInputPlacholder?: string;
+   searchInputPlaceholder?: string;
    className?: string;
    onChange?: (values: string[]) => void;
    defaultValue?: string[]

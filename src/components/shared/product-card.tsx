@@ -35,7 +35,7 @@ interface Props {
 
                <Button variant="secondary">
                   <Plus size={20} className="mr-1" />
-                  Добавить
+                  Add
                </Button>
             </div>
          </Link>
