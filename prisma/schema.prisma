@@ -12,11 +12,33 @@ model User {
    id Int @id @default(autoincrement()) // @id - unique identifier for each user
 
    fullName String
-   email    String
+   email    String @unique
+   // phone    String @unique
    password String
+
+   provider   String?
+   providerId String?
+
+   role UserRole @default(USER)
+
+   cart         Cart?
+   orders       Order[]
+   verification VerificationCode?
 
    createdAt DateTime @default(now()) // @default - automatically set the current date and time when a new user is created
    updatedAt DateTime @updatedAt // @updatedAt - automatically update the current date and time when a user's information is updated
+   cartId    Int
+}
+
+model Category {
+   id Int @id @default(autoincrement())
+
+   name String @unique
+
+   products Product[]
+
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
 }
 
 model Product {
@@ -25,6 +47,125 @@ model Product {
    name     String
    imageUrl String
 
+   category   Category @relation(fields: [categoryId], references: [id]) // @relation - specifies a one-to-many relationship between the Product and Category models
+   categoryId Int
+
+   // items means as variants
+   items       ProductItem[]
+   ingradients Ingradient[]
+
    createdAt DateTime @default(now())
    updatedAt DateTime @updatedAt
+}
+
+// ProductItem (or productVariant) created for an opportunity to create different variants of products
+model ProductItem {
+   id Int @id @default(autoincrement())
+
+   price     Int
+   size      Int? // ? - means that the field is optional
+   pizzaType Int? // pizzaType means the type of the dough (thick and thin)
+
+   product   Product @relation(fields: [productId], references: [id])
+   productId Int
+
+   cartItems CartItem[]
+
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+}
+
+model Ingradient {
+   id Int @id @default(autoincrement())
+
+   name     String
+   price    Int
+   imageUrl String
+
+   products Product[]
+
+   cartItems CartItem[]
+
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+}
+
+model Cart {
+   id Int @id @default(autoincrement())
+
+   user   User? @relation(fields: [userId], references: [id])
+   userId Int?  @unique
+
+   items CartItem[]
+
+   totalAmount Int @default(0)
+
+   token String // Token created for connecting user(registered and unregistered) to exact cart
+
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+   id Int @id @default(autoincrement())
+
+   cart   Cart @relation(fields: [cartId], references: [id])
+   cartId Int
+
+   productItem   ProductItem @relation(fields: [productItemId], references: [id])
+   productItemId Int
+
+   quantity Int
+
+   ingradients Ingradient[]
+
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+}
+
+model Order {
+   id Int @id @default(autoincrement())
+
+   user   User? @relation(fields: [userId], references: [id])
+   userId Int?
+
+   token       String
+   totalAmount Int
+   status      OrderStatus @default(PENDING)
+   paymentId   String?
+
+   items Json
+
+   fullName String
+   email    String
+   phone    String
+   address  String
+   comment  String?
+
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
+}
+
+model VerificationCode {
+   id Int @id @default(autoincrement())
+
+   user   User @relation(fields: [userId], references: [id])
+   userId Int  @unique
+
+   code String
+
+   createdAt DateTime @default(now())
+
+   @@unique([userId, code]) // group unique
+}
+
+enum OrderStatus {
+   PENDING
+   SUCCEEDED
+   CANCELLED
+}
+
+enum UserRole {
+   USER
+   ADMIN
 }
