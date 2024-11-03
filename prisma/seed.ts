@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import { hashSync } from 'bcrypt';
 import { ingredients, categories, products } from './constants';
+import { connect } from 'http2';
 
 const prisma = new PrismaClient();
 
@@ -118,6 +119,32 @@ async function up() {
          generateProductItem({ productId: 17 }),
       ]
    })
+
+   await prisma.cart.createMany({
+      data: [
+         {
+            userId: 1,
+            totalAmount: 0,
+            token: "123"
+         },
+         {
+            userId: 2,
+            totalAmount: 0,
+            token: "456"
+         }
+      ]
+   });
+
+   await prisma.cartItem.create({
+      data: {
+         productItemId: 1,
+         cartId: 1,
+         quantity: 2,
+         ingradients: {
+            connect: [{id: 1}, {id: 2}, {id: 3}, {id: 4}]
+         }
+      }
+   })
 }
 
 // function down is created for removing data before new seeding
@@ -127,6 +154,8 @@ async function down() {
    await prisma.$executeRaw`TRUNCATE TABLE "Product" RESTART IDENTITY CASCADE;`;
    await prisma.$executeRaw`TRUNCATE TABLE "ProductItem" RESTART IDENTITY CASCADE;`;
    await prisma.$executeRaw`TRUNCATE TABLE "Ingradient" RESTART IDENTITY CASCADE;`;
+   await prisma.$executeRaw`TRUNCATE TABLE "Cart" RESTART IDENTITY CASCADE;`;
+   await prisma.$executeRaw`TRUNCATE TABLE "CartItem" RESTART IDENTITY CASCADE;`;
 }
 
 async function main() {
