@@ -19,7 +19,8 @@ model User {
    provider   String?
    providerId String?
 
-   role UserRole @default(USER)
+   role     UserRole @default(USER)
+   verified DateTime
 
    cart         Cart?
    orders       Order[]
@@ -27,7 +28,6 @@ model User {
 
    createdAt DateTime @default(now()) // @default - automatically set the current date and time when a new user is created
    updatedAt DateTime @updatedAt // @updatedAt - automatically update the current date and time when a user's information is updated
-   cartId    Int
 }
 
 model Category {
