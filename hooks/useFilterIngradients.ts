@@ -6,7 +6,7 @@ import { useSet } from "react-use"
 interface ReturnProps {
    ingradients: Ingradient[]
    loading: boolean;
-   selectedIds: Set<string>;
+   selectedIngradients: Set<string>;
    onAddId: (id: string) => void;
 }
 
@@ -32,5 +32,5 @@ export const useFilterIngradients = (): ReturnProps => {
       getIngradients();
    }, [])
 
-   return { ingradients, loading, onAddId: toggle, selectedIds}
+   return { ingradients, loading, onAddId: toggle, selectedIngradients: selectedIds}
 }
