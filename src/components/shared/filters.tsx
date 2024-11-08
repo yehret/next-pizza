@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
-   const { ingradients, loading } = useFilterIngradients()
+   const { ingradients, loading, onAddId, selectedIds } = useFilterIngradients()
 
    const items = ingradients.map((item) => ({ value: String(item.id), text: item.name }))
 
@@ -22,8 +22,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
          <Title text='Filter' size='sm' className='mb-5 font-bold'/>
 
          <div className="flex flex-col gap-4" >
-            <FilterCheckbox text="Can be created" value="1"/>
-            <FilterCheckbox text="New" value="2"/>
+            <FilterCheckbox name='qwe' text="Can be created" value="1"/>
+            <FilterCheckbox name='qwe' text="New" value="2"/>
          </div>
 
          <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
@@ -38,11 +38,14 @@ export const Filters: React.FC<Props> = ({ className }) => {
 
          <CheckboxFiltersGroup 
             title='Ingredients'
+            name='ingradients'
             className='mt-5'
             limit={6}
             defaultItems={items.slice(0, 6)}
             items={items}
             loading={loading}
+            onClickCheckBox={onAddId}
+            selectedIds={selectedIds}
          />
       </div>
    );

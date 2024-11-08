@@ -1,15 +1,20 @@
 import { Ingradient } from "@prisma/client"
 import React from "react"
 import { Api } from "../services/api-client"
+import { useSet } from "react-use"
 
 interface ReturnProps {
    ingradients: Ingradient[]
-   loading: boolean
+   loading: boolean;
+   selectedIds: Set<string>;
+   onAddId: (id: string) => void;
 }
 
 export const useFilterIngradients = (): ReturnProps => {
    const [ingradients, setIngradients] = React.useState<Ingradient[]>([])
    const [loading, setLoading] = React.useState(true)
+
+   const [selectedIds, { toggle }] = useSet(new Set<string>([]));
 
    React.useEffect(() => {
       async function getIngradients() {
@@ -27,5 +32,5 @@ export const useFilterIngradients = (): ReturnProps => {
       getIngradients();
    }, [])
 
-   return { ingradients, loading }
+   return { ingradients, loading, onAddId: toggle, selectedIds}
 }
