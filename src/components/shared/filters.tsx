@@ -12,8 +12,18 @@ interface Props {
    className?: string
 }
 
+interface PriceProps {
+   priceFrom: number;
+   priceTo: number;
+}
+
 export const Filters: React.FC<Props> = ({ className }) => {
    const { ingradients, loading, onAddId, selectedIds } = useFilterIngradients()
+   const [prices, setPrice] = React.useState<PriceProps>({ priceFrom: 0, priceTo: 500 })
+
+   const updatePrice = (name: keyof PriceProps, value: number) => {
+      setPrice({...prices, [name]: value})
+   }
 
    const items = ingradients.map((item) => ({ value: String(item.id), text: item.name }))
 
@@ -29,11 +39,11 @@ export const Filters: React.FC<Props> = ({ className }) => {
          <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
             <p className="font-bold mb-3">Price from & to:</p>
             <div className="flex gap-3 mb-5">
-               <Input type="number" placeholder="0" min={0} max={500} defaultValue={0} />
-               <Input type="number" min={100} max={500} placeholder="500" />
+               <Input type="number" placeholder="0" min={0} max={500} value={String(prices.priceFrom)} onChange={(e) => updatePrice('priceFrom', Number(e.target.value))} />
+               <Input type="number" min={100} max={500} placeholder="500" value={String(prices.priceTo)} onChange={(e) => updatePrice('priceTo', Number(e.target.value))} />
             </div>
 
-            <RangeSlider min={0} max={500} step={10} value={[0, 500]} />
+            <RangeSlider min={0} max={500} step={5} value={[prices.priceFrom, prices.priceTo]} onValueChange={([priceFrom, priceTo]) => setPrice({ priceFrom, priceTo })} />
          </div>
 
          <CheckboxFiltersGroup 
