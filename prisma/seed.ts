@@ -1,7 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import { hashSync } from 'bcrypt';
 import { ingredients, categories, products } from './constants';
-import { connect } from 'http2';
 
 const prisma = new PrismaClient();
 
@@ -39,7 +38,7 @@ async function up() {
       data: categories
    })
 
-   await prisma.ingradient.createMany({
+   await prisma.ingredient.createMany({
       data: ingredients
    })
 
@@ -52,7 +51,7 @@ async function up() {
          name: "Pepperoni Fresh",
          imageUrl: "https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif",
          categoryId: 1,
-         ingradients: {
+         ingredients: {
             connect: ingredients.slice(0, 5)
          }
       }
@@ -63,7 +62,7 @@ async function up() {
          name: "Cheese Pizza",
          imageUrl: "https://media.dodostatic.com/image/r:292x292/11EF16A483ADD64E91433787A0041619.avif",
          categoryId: 1,
-         ingradients: {
+         ingredients: {
             connect: ingredients.slice(5, 10)
          }
       }
@@ -74,7 +73,7 @@ async function up() {
          name: "Chorizo Fresh",
          imageUrl: "https://media.dodostatic.com/image/r:292x292/11EE87464C2BF76CBD2D76B7567BA5A0.avif",
          categoryId: 1,
-         ingradients: {
+         ingredients: {
             connect: ingredients.slice(10, 40)
          }
       }
@@ -140,7 +139,7 @@ async function up() {
          productItemId: 1,
          cartId: 1,
          quantity: 2,
-         ingradients: {
+         ingredients: {
             connect: [{id: 1}, {id: 2}, {id: 3}, {id: 4}]
          }
       }
@@ -153,7 +152,7 @@ async function down() {
    await prisma.$executeRaw`TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE;`;
    await prisma.$executeRaw`TRUNCATE TABLE "Product" RESTART IDENTITY CASCADE;`;
    await prisma.$executeRaw`TRUNCATE TABLE "ProductItem" RESTART IDENTITY CASCADE;`;
-   await prisma.$executeRaw`TRUNCATE TABLE "Ingradient" RESTART IDENTITY CASCADE;`;
+   await prisma.$executeRaw`TRUNCATE TABLE "Ingredient" RESTART IDENTITY CASCADE;`;
    await prisma.$executeRaw`TRUNCATE TABLE "Cart" RESTART IDENTITY CASCADE;`;
    await prisma.$executeRaw`TRUNCATE TABLE "CartItem" RESTART IDENTITY CASCADE;`;
 }

@@ -1,7 +1,7 @@
 import * as products from './products'
-import * as ingradients from './ingradients'
+import * as ingredients from './ingredients'
 
 export const Api = {
    products,
-   ingradients
+   ingredients
 }
