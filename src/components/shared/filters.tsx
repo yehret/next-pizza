@@ -2,14 +2,13 @@
 
 import React from 'react'
 import { Title } from './title';
-import { FilterCheckbox } from './filter-checkbox';
 import { Input } from '../ui';
 import { RangeSlider } from '../ui/range-slider';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useFilterIngradients } from '../../../hooks/useFilterIngradients';
 import { useSet } from 'react-use';
 import qs from 'qs'
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Props {
    className?: string
@@ -20,13 +19,25 @@ interface PriceProps {
    priceTo?: number;
 }
 
-export const Filters: React.FC<Props> = ({ className }) => {
-   const router = useRouter()
-   const { ingradients, loading, onAddId, selectedIngradients } = useFilterIngradients()
-   const [prices, setPrice] = React.useState<PriceProps>({ })
+interface QueryFilters extends PriceProps {
+   pizzaTypes: string;
+   sizes: string;
+   ingradients: string;
+}
 
-   const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
-   const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]));
+
+export const Filters: React.FC<Props> = ({ className }) => {
+   const searchParams = useSearchParams() as unknown as Map<keyof QueryFilters, string>;
+
+   const router = useRouter()
+
+   const { ingradients, loading, onAddId, selectedIngradients } = useFilterIngradients(searchParams.get('ingradients')?.split(','));
+   const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>(searchParams.has('sizes') ? searchParams.get('sizes')?.split(',') : []));
+   const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>(searchParams.has('pizzaTypes') ? searchParams.get('pizzaTypes')?.split(',') : []));
+   const [prices, setPrice] = React.useState<PriceProps>({ 
+      priceFrom: Number(searchParams.get('priceFrom')) || undefined,
+      priceTo: Number(searchParams.get('priceTo')) || undefined
+    })
 
    const items = ingradients.map((item) => ({ value: String(item.id), text: item.name }))
 

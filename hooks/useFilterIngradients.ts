@@ -10,11 +10,11 @@ interface ReturnProps {
    onAddId: (id: string) => void;
 }
 
-export const useFilterIngradients = (): ReturnProps => {
+export const useFilterIngradients = (values: string[] = []): ReturnProps => {
    const [ingradients, setIngradients] = React.useState<Ingradient[]>([])
    const [loading, setLoading] = React.useState(true)
 
-   const [selectedIds, { toggle }] = useSet(new Set<string>([]));
+   const [selectedIds, { toggle }] = useSet(new Set<string>(values));
 
    React.useEffect(() => {
       async function getIngradients() {
@@ -31,6 +31,7 @@ export const useFilterIngradients = (): ReturnProps => {
 
       getIngradients();
    }, [])
+
 
    return { ingradients, loading, onAddId: toggle, selectedIngradients: selectedIds}
 }
