@@ -8,19 +8,22 @@ import { RangeSlider } from '../ui/range-slider';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useFilterIngradients } from '../../../hooks/useFilterIngradients';
 import { useSet } from 'react-use';
+import qs from 'qs'
+import { useRouter } from 'next/navigation';
 
 interface Props {
    className?: string
 }
 
 interface PriceProps {
-   priceFrom: number;
-   priceTo: number;
+   priceFrom?: number;
+   priceTo?: number;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
+   const router = useRouter()
    const { ingradients, loading, onAddId, selectedIngradients } = useFilterIngradients()
-   const [prices, setPrice] = React.useState<PriceProps>({ priceFrom: 0, priceTo: 500 })
+   const [prices, setPrice] = React.useState<PriceProps>({ })
 
    const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
    const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]));
@@ -30,10 +33,18 @@ export const Filters: React.FC<Props> = ({ className }) => {
    const updatePrice = (name: keyof PriceProps, value: number) => {
       setPrice({...prices, [name]: value})
    }
-
    React.useEffect(() => {
-      console.log({prices, pizzaTypes, sizes, selectedIngradients});
-   }, [prices, pizzaTypes, sizes, selectedIngradients])
+      const filters = {
+         ...prices,
+         pizzaTypes: Array.from(pizzaTypes),
+         sizes: Array.from(sizes),
+         ingradients: Array.from(selectedIngradients),
+      }
+
+      const query = qs.stringify(filters, { arrayFormat: 'comma' })
+
+      router.push(`?${query}`, { scroll: false })
+   }, [prices, pizzaTypes, sizes, selectedIngradients, router])
 
    return (
       <div className={className}>
