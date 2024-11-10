@@ -1,13 +1,25 @@
 import { Container, Filters, ProductsGroupList, Title, TopBar } from "@/components/shared";
+import { prisma } from "../../prisma/prisma-client";
 
-export default function Home() {
+export default async function Home() {
+   const categories = await prisma.category.findMany({
+      include: {
+         products: {
+            include: {
+               ingredients: true,
+               items: true
+            }
+         }
+      }
+   })
+
   return (
    <>
       <Container className="mt-10">
          <Title text="All pizzas" size="lg" className="font-extrabold" />
       </Container>
 
-      <TopBar />
+      <TopBar categories={categories.filter(category => category.products.length > 0)} />
 
       <Container className="mt-10 pb-14">
          <div className="flex gap-[80px]">
@@ -20,23 +32,11 @@ export default function Home() {
             {/* ProductList */}
             <div className="flex-1">
                <div className="flex flex-col gap-16">
-                  <ProductsGroupList title="Pizzas" categoryId={1} items={[
-                     { id: 1, name: 'Cheeseburger pizza', items: [{ price: 30}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 2, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 3, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 4, name: 'Cheeseburger pizza', items: [{ price: 35}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 5, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 6, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'}
-                  ]}/>
-
-                  <ProductsGroupList title="Combo" categoryId={2} items={[
-                     { id: 7, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 8, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 9, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 10, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 11, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                     { id: 12, name: 'Cheeseburger pizza', items: [{ price: 20}], imageUrl: 'https://media.dodostatic.net/image/r:292x292/11EE7D610BBEB562BD4D48786AD87270.webp'},
-                  ]}/>
+                  {categories.map((category) => (
+                     category.products.length > 0 && (
+                        <ProductsGroupList key={category.id} title={category.name} categoryId={category.id} items={category.products}/>
+                     )
+                  ))}
                </div>
             </div>
          </div>

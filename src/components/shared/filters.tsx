@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Title } from './title';
-import { Button, Input } from '../ui';
+import { Input } from '../ui';
 import { RangeSlider } from '../ui/range-slider';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useFilters, useIngredients, useQueryFilters } from '../../../hooks';
@@ -27,7 +27,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
    return (
       <div className={className}>
          <Title text='Filter' size='sm' className='mb-5 font-bold'/>
-         <Button>Clear filter</Button>
+         {/* <Button>Clear filter</Button> */}
 
          <CheckboxFiltersGroup
             title="Dough type"
