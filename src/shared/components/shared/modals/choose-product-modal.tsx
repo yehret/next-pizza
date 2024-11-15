@@ -1,13 +1,12 @@
 'use client'
 
-import { Dialog } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { ChooseProductForm } from "../choose-product-form";
-import { ProductWithRelations } from "../../../../@types/prisma";
 import { ChoosePizzaForm } from "../choose-pizza-form";
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
+import { ProductWithRelations } from "../../../../../@types/prisma";
+import { Dialog, DialogContent, DialogTitle } from "../../ui/dialog";
 
 interface Props {
    product: ProductWithRelations;

@@ -5,6 +5,7 @@ import { Title } from './title';
 import { Button } from '../ui';
 import { GroupVariants } from './group-variants';
 import { Ingredient, ProductItem } from '@prisma/client';
+import { pizzaSizes, pizzaTypes } from '@/shared/constants/pizza';
 
 interface Props {
    imageUrl: string;
@@ -41,19 +42,15 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
             <p className="text-gray-400">{textDetails}</p>
  
-            {/* <div className="flex flex-col gap-4 mt-5">
-            <GroupVariants
-               items={availableSizes}
-               value={String(size)}
-               onClick={(value) => setSize(Number(value) as PizzaSize)}
-            />
+            <div className="flex flex-col gap-4 mt-5">
+               <GroupVariants
+                  items={pizzaSizes}
+               />
 
-            <GroupVariants
-               items={pizzaTypes}
-               value={String(type)}
-               onClick={(value) => setType(Number(value) as PizzaType)}
-            />
-         </div>  */}
+               <GroupVariants
+                  items={pizzaTypes}
+               />
+            </div>
 
             <div className="flex flex-col gap-4 mt-5">
                <Button
