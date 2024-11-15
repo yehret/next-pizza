@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import React from 'react'
-import { ProductImage } from './product-image';
+import { PizzaImage } from './pizza-image';
 import { Title } from './title';
 import { Button } from '../ui';
 import { GroupVariants } from './group-variants';
@@ -25,13 +25,16 @@ export const ChoosePizzaForm: React.FC<Props> = ({
    className, }) => {
    const totalPrice = 15
    const textDetails = '30sm traditional dough, 590 g'
+   const size = 30
 
    console.log(ingredients);
+   console.log(items);
+   
    
 
    return (
       <div className={cn(className, 'flex flex-1')}>
-         <ProductImage src={imageUrl} size={30} />
+         <PizzaImage src={imageUrl} size={size} />
 
          <div className="w-[490px] bg-[#f7f6f5] p-7">
             <Title text={name} size="md" className="font-extrabold mb-1" />

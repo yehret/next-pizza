@@ -7,7 +7,7 @@ interface Props {
    size: 20 | 30 | 40;
  }
 
-export const ProductImage: React.FC<Props> = ({ className, src, size }) => {
+export const PizzaImage: React.FC<Props> = ({ className, src, size }) => {
   return (
       <div className={cn('flex items-center justify-center flex-1 relative w-full', className)}>
          <img
