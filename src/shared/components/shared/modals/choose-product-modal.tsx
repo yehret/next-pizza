@@ -24,7 +24,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
       </VisuallyHidden>
       <DialogContent
         className={cn(
-          'p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden',
+          'p-0 w-[1060px] max-w-[1060px] min-h-[550px] bg-white overflow-hidden',
           className,
         )} aria-describedby={undefined}>
          {isPizzaForm ? (
