@@ -5,7 +5,7 @@ import { Title } from './title';
 import { Button } from '../ui';
 import { GroupVariants } from './group-variants';
 import { Ingredient, ProductItem } from '@prisma/client';
-import { PizzaSize, pizzaSizes, PizzaType, pizzaTypes } from '@/shared/constants/pizza';
+import { mapPizzaType, PizzaSize, pizzaSizes, PizzaType, pizzaTypes } from '@/shared/constants/pizza';
 import { IngredientItem } from './ingredient-item';
 import { useSet } from 'react-use';
 
@@ -13,8 +13,9 @@ interface Props {
    imageUrl: string;
    name: string;
    ingredients: Ingredient[];
-   items?: any[];
+   items: ProductItem[];
    loading?: boolean;
+   onClickAddCart: VoidFunction;
    // onSubmit: (itemId: number, ingredients: number[]) => void;
    className?: string;
 }
@@ -25,15 +26,28 @@ export const ChoosePizzaForm: React.FC<Props> = ({
    imageUrl,
    ingredients,
    loading,
+   onClickAddCart,
    className, }) => {
    const [size, setSize] = React.useState<PizzaSize>(20)
    const [type, setType] = React.useState<PizzaType>(1)
 
    const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]))
 
-   const totalPrice = 15
-   const textDetails = '30sm traditional dough, 590 g'
+   const textDetails = `${size}sm, ${mapPizzaType[type]} pizza`
    
+   const pizzaPrice = items.find((item) => item.pizzaType === type && item.size === size)!.price;
+   const ingredientsPrice = ingredients
+      .filter((ingredient) => selectedIngredients.has(ingredient.id))
+      .reduce((acc, ingredient) => acc + ingredient.price, 0);
+   const totalPrice = pizzaPrice + ingredientsPrice;
+
+   const handleClickAdd = () => {
+      onClickAddCart?.()
+      console.log({
+         size, type, ingredients: selectedIngredients
+      });
+      
+   }
 
    return (
       <div className={cn(className, 'flex flex-1')}>
@@ -67,6 +81,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
             <div className="flex flex-col gap-4 mt-5">
                <Button
+                  onClick={handleClickAdd}
                   className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
                   Add to cart for {totalPrice} $
                </Button>
