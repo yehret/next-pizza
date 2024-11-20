@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from './container';
 import { Categories } from './categories';
 import { SortPopup } from './sort-popup';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { Category } from '@prisma/client';
 
 interface Props {

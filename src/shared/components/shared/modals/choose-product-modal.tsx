@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { useRouter } from "next/navigation";
 import { ChooseProductForm } from "../choose-product-form";
 import { ChoosePizzaForm } from "../choose-pizza-form";
