@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@/shared/lib/utils';
 import React from 'react'
 import { PizzaImage } from './pizza-image';
@@ -26,7 +28,6 @@ export const ChoosePizzaForm: React.FC<Props> = ({
    items,
    imageUrl,
    ingredients,
-   loading,
    onClickAddCart,
    className, }) => {
    const { size, type, availableSizes, selectedIngredients, setSize, setType, addIngredient } =
