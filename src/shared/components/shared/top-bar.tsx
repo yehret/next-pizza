@@ -6,7 +6,7 @@ import { cn } from '@/shared/lib/utils';
 import { Category } from '@prisma/client';
 
 interface Props {
-categories: Category[];
+  categories: Category[];
   className?: string;
 }
 
