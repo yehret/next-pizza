@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 import {
@@ -13,6 +15,8 @@ import {
 import { Button } from '../ui'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { CartDrawerItem } from './cart-drawer-item'
+import { getCartItemDetails } from '@/shared/lib'
 
 interface Props {
    className?: string
@@ -30,7 +34,24 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children,
                </SheetTitle>
             </SheetHeader>
 
-            { /* Items */}
+            <div className='-mx-6 mt-5 overflow-auto flex-1'>
+               <div className='mb-2'>
+                  <CartDrawerItem id={1} imageUrl={'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'} details={getCartItemDetails(1, 30, [{name: 'Cheese border'}, {name: 'Creamy mozzarella'}, {name: 'Cheddar and parmesan cheese'}, {name: 'Hot pepper jalapeno'}, {name: 'Tender chicken'}])} name={'Chorizo Freash'} price={34} quantity={1} />
+               </div>
+               <div className='mb-2'>
+                  <CartDrawerItem id={1} imageUrl={'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'} details={getCartItemDetails(1, 30, [{name: 'Cheese border'}, {name: 'Creamy mozzarella'}, {name: 'Cheddar and parmesan cheese'}, {name: 'Hot pepper jalapeno'}, {name: 'Tender chicken'}])} name={'Chorizo Freash'} price={34} quantity={1} />
+               </div>
+               <div className='mb-2'>
+                  <CartDrawerItem id={1} imageUrl={'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'} details={getCartItemDetails(1, 30, [{name: 'Cheese border'}, {name: 'Creamy mozzarella'}, {name: 'Cheddar and parmesan cheese'}, {name: 'Hot pepper jalapeno'}, {name: 'Tender chicken'}])} name={'Chorizo Freash'} price={34} quantity={1} />
+               </div>
+               <div className='mb-2'>
+                  <CartDrawerItem id={1} imageUrl={'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'} details={getCartItemDetails(1, 30, [{name: 'Cheese border'}, {name: 'Creamy mozzarella'}, {name: 'Cheddar and parmesan cheese'}, {name: 'Hot pepper jalapeno'}, {name: 'Tender chicken'}])} name={'Chorizo Freash'} price={34} quantity={1} />
+               </div>
+               <div className='mb-2'>
+                  <CartDrawerItem id={1} imageUrl={'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'} details={getCartItemDetails(1, 30, [{name: 'Cheese border'}, {name: 'Creamy mozzarella'}, {name: 'Cheddar and parmesan cheese'}, {name: 'Hot pepper jalapeno'}, {name: 'Tender chicken'}])} name={'Chorizo Freash'} price={34} quantity={1} />
+               </div>
+               
+            </div>
 
             <SheetFooter className='-mx-6 mg-white p-8'>
                <div className='w-full'>
