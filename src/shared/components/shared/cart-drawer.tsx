@@ -1,12 +1,10 @@
 'use client';
 
 import React from 'react';
-
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -17,113 +15,43 @@ import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { CartDrawerItem } from './cart-drawer-item';
 import { getCartItemDetails } from '@/shared/lib';
+import { useCartStore } from '@/shared/store';
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 
-interface Props {
-  className?: string;
-}
+export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
+   const items = useCartStore((state) => state.items)
+   const fetchCartItems = useCartStore((state) => state.fetchCartItems)
+   const totalAmount = useCartStore((state) => state.totalAmount)
 
-export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children, className }) => {
+   React.useEffect(() => {
+      fetchCartItems()
+   }, [])      
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
         <SheetHeader>
           <SheetTitle>
-            In Cart <span className="font-bold">3 items</span>
+            In Cart <span className="font-bold">{items.length} items</span>
           </SheetTitle>
         </SheetHeader>
 
         <div className="-mx-6 mt-5 overflow-auto flex-1">
-          <div className="mb-2">
-            <CartDrawerItem
-              id={1}
-              imageUrl={
-                'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'
-              }
-              details={getCartItemDetails(1, 30, [
-                { name: 'Cheese border' },
-                { name: 'Creamy mozzarella' },
-                { name: 'Cheddar and parmesan cheese' },
-                { name: 'Hot pepper jalapeno' },
-                { name: 'Tender chicken' },
-              ])}
-              name={'Chorizo Freash'}
-              price={34}
-              quantity={1}
-            />
+          {items.map((item) => (
+            <div className="mb-2" key={item.id}>
+               <CartDrawerItem
+               id={item.id}
+               imageUrl={item.imageUrl}
+               details={
+                  item.pizzaSize && item.pizzaType ?
+                  getCartItemDetails(item.pizzaType as PizzaType, item.pizzaSize as PizzaSize, item.ingredients) : ''}
+               name={item.name}
+               price={item.price}
+               quantity={item.quantity}
+               />
           </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              id={1}
-              imageUrl={
-                'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'
-              }
-              details={getCartItemDetails(1, 30, [
-                { name: 'Cheese border' },
-                { name: 'Creamy mozzarella' },
-                { name: 'Cheddar and parmesan cheese' },
-                { name: 'Hot pepper jalapeno' },
-                { name: 'Tender chicken' },
-              ])}
-              name={'Chorizo Freash'}
-              price={34}
-              quantity={1}
-            />
-          </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              id={1}
-              imageUrl={
-                'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'
-              }
-              details={getCartItemDetails(1, 30, [
-                { name: 'Cheese border' },
-                { name: 'Creamy mozzarella' },
-                { name: 'Cheddar and parmesan cheese' },
-                { name: 'Hot pepper jalapeno' },
-                { name: 'Tender chicken' },
-              ])}
-              name={'Chorizo Freash'}
-              price={34}
-              quantity={1}
-            />
-          </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              id={1}
-              imageUrl={
-                'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'
-              }
-              details={getCartItemDetails(1, 30, [
-                { name: 'Cheese border' },
-                { name: 'Creamy mozzarella' },
-                { name: 'Cheddar and parmesan cheese' },
-                { name: 'Hot pepper jalapeno' },
-                { name: 'Tender chicken' },
-              ])}
-              name={'Chorizo Freash'}
-              price={34}
-              quantity={1}
-            />
-          </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              id={1}
-              imageUrl={
-                'https://media.dodostatic.com/image/r:292x292/11EE8739E55F5BCE89E33C950E9F9698.avif'
-              }
-              details={getCartItemDetails(1, 30, [
-                { name: 'Cheese border' },
-                { name: 'Creamy mozzarella' },
-                { name: 'Cheddar and parmesan cheese' },
-                { name: 'Hot pepper jalapeno' },
-                { name: 'Tender chicken' },
-              ])}
-              name={'Chorizo Freash'}
-              price={34}
-              quantity={1}
-            />
-          </div>
+          ))}
         </div>
 
         <SheetFooter className="-mx-6 mg-white p-8">
@@ -133,7 +61,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children,
                 Total
                 <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
               </span>
-              <span className="font-bold text-lg">123 $</span>
+              <span className="font-bold text-lg">{totalAmount} $</span>
             </div>
 
             <Link href="/cart">
