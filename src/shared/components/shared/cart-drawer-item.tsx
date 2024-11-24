@@ -22,7 +22,9 @@ export const CartDrawerItem: React.FC<Props> = ({
       <CartItem.Image src={imageUrl} />
       <div className="flex-1">
         <CartItem.Info details={details} name={name} />
+
         <hr className="my-3" /> {/* Divider */}
+        
         <div className="flex items-center justify-between">
           <CountButton onClick={(type) => console.log(type)} value={quantity} />
           <div className="flex items-center gap-3">
