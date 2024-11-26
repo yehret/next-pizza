@@ -30,6 +30,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   onClickAddCart,
   onSubmit,
   className,
+  loading
 }) => {
   const { currentItemId, size, type, availableSizes, selectedIngredients, setSize, setType, addIngredient } =
     usePizzaOptions(items);
@@ -86,6 +87,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
         <div className="flex flex-col gap-4 mt-5">
           <Button
+            loading={loading}
             onClick={handleClickAdd}
             className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
             Add to cart for {totalPrice} $
