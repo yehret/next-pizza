@@ -20,7 +20,6 @@ export const ChooseProductForm: React.FC<Props> = ({
   className,
   loading,
 }) => {
-  const totalPrice = 15;
 
   return (
     <div className={cn(className, 'flex flex-1')}>
@@ -36,8 +35,8 @@ export const ChooseProductForm: React.FC<Props> = ({
         <Title text={name} size="md" className="font-extrabold mb-1" />
 
         <div className="flex flex-col gap-4 mt-5">
-          <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
-            Add to cart for {totalPrice} $
+          <Button onClick={onSubmit} className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
+            Add to cart for {price} $
           </Button>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { ChoosePizzaForm } from "../choose-pizza-form";
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { ProductWithRelations } from "../../../../../@types/prisma";
 import { Dialog, DialogContent, DialogTitle } from "../../ui/dialog";
+import { useCartStore } from "@/shared/store";
 
 interface Props {
    product: ProductWithRelations;
@@ -15,7 +16,24 @@ interface Props {
 
 export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
    const router = useRouter();
+
+   const firstItem = product.items[0];
+
    const isPizzaForm = Boolean(product.items[0].pizzaType);
+   const addCartItem = useCartStore(state => state.addCartItem)
+
+   const onAddProduct = () => {
+      addCartItem({
+         productItemId: firstItem.id
+      })
+   }
+
+   const onAddPizza = (productItemId: number, ingredients: number[]) => {
+      addCartItem({
+         productItemId,
+         ingredients
+      })
+   }
 
   return (
     <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
@@ -28,9 +46,9 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
           className,
         )} aria-describedby={undefined}>
          {isPizzaForm ? (
-            <ChoosePizzaForm imageUrl={product.imageUrl} name={product.name} ingredients={product.ingredients} items={product.items} />
+            <ChoosePizzaForm onSubmit={onAddPizza} imageUrl={product.imageUrl} name={product.name} ingredients={product.ingredients} items={product.items} />
          ) : (
-            <ChooseProductForm imageUrl={product.imageUrl} name={product.name} price={15}/>
+            <ChooseProductForm onSubmit={onAddProduct} imageUrl={product.imageUrl} name={product.name} price={firstItem.price}/>
          )}
       </DialogContent>
     </Dialog>
