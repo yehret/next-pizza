@@ -9,6 +9,7 @@ import { useCategoryStore } from '@/shared/store/category';
 
 interface Props {
   title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: any[];
   categoryId: number;
   className?: string;

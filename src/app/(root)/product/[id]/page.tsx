@@ -22,7 +22,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
                <p className="text-gray-400">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni accusamus aut magnam fugit atque numquam cum assumenda labore reiciendis natus.</p>
             
-               <GroupVariants items={[{ name: 'Small', value: '1'}, { name: 'Medium', value: '2'}, { name: 'Large', value: '3'}]}/>
+               <GroupVariants value="2" items={[{ name: 'Small', value: '1'}, { name: 'Medium', value: '2'}, { name: 'Large', value: '3'}]}/>
             </div>
          </div>
       </Container>
