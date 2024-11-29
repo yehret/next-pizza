@@ -50,7 +50,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
             items={[
                { text: '20 sm', value: '20' },
                { text: '30 sm', value: '30' },
-               { text: '40 sn', value: '40' },
+               { text: '40 sm', value: '40' },
             ]}
          />
 
