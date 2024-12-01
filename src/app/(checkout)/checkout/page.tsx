@@ -1,4 +1,4 @@
-import { CheckoutItemDetails, Container, Title, WhiteBlock } from "@/shared/components/shared";
+import { CheckoutItem, CheckoutItemDetails, Container, Title, WhiteBlock } from "@/shared/components/shared";
 import { Button, Input, Textarea } from "@/shared/components/ui";
 import { ArrowRight, Package, Percent, Truck } from "lucide-react";
 
@@ -11,7 +11,11 @@ export default function Checkout() {
             {/* Left side */}
             <div className="flex flex-col gap-10 flex-1 mb-20">
                <WhiteBlock title="1. Cart">
-                  Checkout cart content
+                  <div className="flex flex-col gap-5">
+                     <CheckoutItem id={0} imageUrl={"https://media.dodostatic.com/image/r:292x292/11EE87464C2BF76CBD2D76B7567BA5A0.avif"} details={"Chicken, extra cheese, tomato"} name={"Chorizo Fresh"} price={12} quantity={1} />
+                     <CheckoutItem id={0} imageUrl={"https://media.dodostatic.com/image/r:292x292/11EE87464C2BF76CBD2D76B7567BA5A0.avif"} details={"Chicken, extra cheese, tomato"} name={"Chorizo Fresh"} price={12} quantity={1} />
+                     <CheckoutItem id={0} imageUrl={"https://media.dodostatic.com/image/r:292x292/11EE87464C2BF76CBD2D76B7567BA5A0.avif"} details={"Chicken, extra cheese, tomato"} name={"Chorizo Fresh"} price={12} quantity={1} />
+                  </div>  
                </WhiteBlock>
 
                <WhiteBlock title="2. Personal information">
