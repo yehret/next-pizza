@@ -35,7 +35,7 @@ export const FormInput: React.FC<Props> = ({ className, name, label, required, .
             {value && <ClearButton onClick={onClickClear}/>}
          </div>
 
-         {errorText && <ErrorText text={'Field is necessary to fill'} className="mt-2" />}
+         {errorText && <ErrorText text={errorText} className="mt-2" />}
       </div>
    )
 }

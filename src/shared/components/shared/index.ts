@@ -27,3 +27,5 @@ export { RequiredSymbol } from './required-symbol';
 export { ClearButton } from './clear-button';
 export { ErrorText } from './error-text';
 export * from './modals';
+export * from './checkout';
+export * from './form';
