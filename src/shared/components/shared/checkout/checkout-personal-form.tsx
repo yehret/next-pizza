@@ -3,6 +3,7 @@ import { WhiteBlock } from '../white-block';
 import { FormInput } from '../form-components';
 
 interface Props {
+   disabled?: boolean;
    className?: string;
 }
 

@@ -1,18 +1,19 @@
 import React from 'react'
 import { WhiteBlock } from './white-block';
-import { Button } from '../ui';
+import { Button, Skeleton } from '../ui';
 import { ArrowRight, Package, Percent, Truck } from 'lucide-react';
 import { CheckoutItemDetails } from './checkout-item-details';
 
 interface Props {
    totalAmount: number;
    className?: string;
+   loading?: boolean;
 }
 
 const TIP = 5;
 const DELIVERY_PRICE = 5;
 
-export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, className }) => {
+export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, className, loading }) => {
 
    const tipPrice = (totalAmount * TIP) / 100;
    const totalPrice = totalAmount + DELIVERY_PRICE + tipPrice;
@@ -22,7 +23,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, className }) => 
          {/* Total price */}
          <div className="flex flex-col gap-1">
             <span className="text-xl">Total:</span>
-            <span className="h-11 text-[34px] font-extrabold">{totalPrice} $</span>
+            {loading ? <Skeleton className='w-48 h-11' /> : <span className="h-11 text-[34px] font-extrabold">{totalPrice} $</span>}
          </div>
 
          <CheckoutItemDetails 
@@ -32,7 +33,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, className }) => 
                   Cart price:
                </div>
             } 
-            value={totalAmount}
+            value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${totalAmount} $`}
          />
 
          <CheckoutItemDetails 
@@ -42,7 +43,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, className }) => 
                   Tip:
                </div>
             } 
-            value={tipPrice}
+            value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${tipPrice} $`}
          />
 
          <CheckoutItemDetails 
@@ -52,7 +53,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, className }) => 
                   Delivery:
                </div>
             } 
-            value={DELIVERY_PRICE}
+            value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${DELIVERY_PRICE} $`}
          />
 
          <Button
