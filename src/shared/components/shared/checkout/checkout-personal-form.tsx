@@ -7,6 +7,9 @@ interface Props {
 }
 
 export const CheckoutPersonalForm: React.FC<Props> = ({ className }) => {
+
+   //TODO: Add phone mask
+
    return (
       <WhiteBlock className={className} title="2. Personal information">
          <div className="grid grid-cols-2 gap-5">
