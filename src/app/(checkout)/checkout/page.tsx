@@ -1,13 +1,17 @@
 'use client'
 
+import React from 'react';
 import { CheckoutSidebar, Container, Title } from "@/shared/components/shared";
 import { useCart } from "@/shared/hooks";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckoutAddressForm, CheckoutCart, CheckoutPersonalForm } from "@/shared/components";
 import { checkoutFormSchema, CheckoutFormValues } from "@/shared/constants/checkout-form-schema";
+import { createOrder } from "@/app/actions";
+import toast from "react-hot-toast";
 
 export default function CheckoutPage() {
+   const [submitting, setSubmitting] = React.useState(false);
    const { totalAmount, items, updateItemQuantity, removeCartItem, loading } = useCart()
 
    const form = useForm<CheckoutFormValues>({
@@ -22,8 +26,24 @@ export default function CheckoutPage() {
        },
    })
 
-   const onSubmit = (data: CheckoutFormValues) => {
-      console.log(data);
+   const onSubmit = async (data: CheckoutFormValues) => {
+      try {
+         setSubmitting(true);
+         const url = await createOrder(data);
+
+         toast.error('Order accepted! 📝 Redirecting to payment... ', {
+            icon: '✅',
+          });
+
+         if(url) location.href = url;
+         
+      } catch (error) {
+         console.log(error);
+         setSubmitting(false);
+         toast.error('Failed to create order', {
+            icon: '❌'
+         })
+      }
    }
 
    // TODO: move this function to useCart hook
@@ -55,7 +75,7 @@ export default function CheckoutPage() {
 
                   {/* Right side */}
                   <div className="w-[450px]">
-                     <CheckoutSidebar totalAmount={totalAmount} loading={loading} />
+                     <CheckoutSidebar totalAmount={totalAmount} loading={loading || submitting} />
                   </div>
                   
                </div>

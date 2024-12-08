@@ -20,10 +20,7 @@ export const CheckoutCart: React.FC<Props> = ({ loading, items, onClickCountButt
          <div className="flex flex-col gap-5">
 
             {/* TODO: make proper skeletons  */}
-
-            {  loading
-               ? [...Array(4)].map((_, index) => <CheckoutItemSkeleton key={index} />)
-               : items.map(item => (
+            {items.map(item => (
                   <CheckoutItem 
                      key={item.id}
                      id={item.id} 
