@@ -92,7 +92,7 @@ export async function createOrder(data: CheckoutFormValues) {
          },
        });
 
-      const paymentUrl = paymentData.url;
+      const paymentUrl = paymentData.url!;
 
       await sendEmail(
          data.email,

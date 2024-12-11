@@ -4,7 +4,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 interface PaymentData {
   amount: number; // Amount in cents
-  orderId: string; // Unique order ID
+  orderId: number; // Unique order ID
   description: string; // Description of the payment
 }
 
@@ -21,7 +21,7 @@ export async function createPayment(data: PaymentData) {
               name: `Order #${data.orderId}`, // Displayed on the checkout page
               description: data.description,
             },
-            unit_amount: data.amount, // Amount in cents
+            unit_amount: data.amount * 100, // Amount in cents
           },
           quantity: 1, // Quantity of the item
         },
@@ -35,9 +35,10 @@ export async function createPayment(data: PaymentData) {
     });
 
     return {
-      id: session.id,
+      id: session.id, // Return Payment ID (Transaction ID)
       url: session.url, // URL for the Stripe-hosted checkout page
     };
+
   } catch (error) {
     console.error('[CreatePayment] Error creating checkout session:', error);
     throw new Error('Unable to create payment session');
