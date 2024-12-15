@@ -1,7 +1,7 @@
-import { authOptions } from '@/shared/constants/auth-options';
 import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../../../prisma/prisma-client';
+import { authOptions } from '@/shared/constants/auth-options';
 
 export const dynamic = 'force-dynamic';
 
