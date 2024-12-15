@@ -9,9 +9,8 @@ import { User } from 'lucide-react';
 import Link from 'next/link';
 import { CartButton } from './cart-button';
 import { SearchInput } from './search-input';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { useSession, signIn } from 'next-auth/react';
 import { ProfileButton } from './profile-button';
 import { AuthModal } from './modals';
 
@@ -23,13 +22,8 @@ interface Props {
 
 export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
   const [openAuthModal, setOpenAuthModal] = React.useState(false);
-
-   const { data: session } = useSession()
    const searchParams = useSearchParams();
-   // const router = useRouter();
-   
-   console.log(session);
-   
+   const router = useRouter();
 
    React.useEffect(() => {
       let toastMessage = '';
@@ -44,7 +38,7 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
   
       if (toastMessage) {
         setTimeout(() => {
-         //  router.replace('/');
+          router.replace('/');
           toast.success(toastMessage, {
             duration: 3000,
           });

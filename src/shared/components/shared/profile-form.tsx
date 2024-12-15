@@ -53,6 +53,9 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
     });
   };
 
+  // TODO: ADD ORDER HISTORY
+  // TODO: ADD PASSWORDS TO BE OPTIONAL
+
   return (
     <Container className="my-10">
       <Title text={`Personal Information | #${data.id}`} size="md" className="font-bold" />

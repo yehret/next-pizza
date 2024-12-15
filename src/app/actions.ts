@@ -4,10 +4,12 @@ import { CheckoutFormValues } from "@/shared/constants/checkout-form-schema";
 import { prisma } from "../../prisma/prisma-client";
 import { OrderStatus, Prisma } from "@prisma/client";
 import { cookies } from "next/headers";
-import { getUserSession, sendEmail } from "@/shared/lib";
+import { sendEmail } from "@/shared/lib";
 import { PayOrderTemplate } from "@/shared/components/shared/email-templates/pay-order";
 import { createPayment } from "@/shared/lib/create-payment";
 import { hashSync } from "bcrypt";
+import { getUserSession } from "@/shared/lib/get-user-session";
+import { VerificationUserTemplate } from "@/shared/components/shared/email-templates/verification-user";
 
 export async function createOrder(data: CheckoutFormValues) {
    try {
@@ -137,6 +139,52 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
      });
    } catch (err) {
      console.log('Error [UPDATE_USER]', err);
+     throw err;
+   }
+ }
+
+ export async function registerUser(body: Prisma.UserCreateInput) {
+   try {
+     const user = await prisma.user.findFirst({
+       where: {
+         email: body.email,
+       },
+     });
+ 
+     if (user) {
+       if (!user.verified) {
+         throw new Error('Email is not verified');
+       }
+ 
+       throw new Error('User already exists');
+     }
+ 
+     const createdUser = await prisma.user.create({
+       data: {
+         fullName: body.fullName,
+         email: body.email,
+         password: hashSync(body.password, 10),
+       },
+     });
+ 
+     const code = Math.floor(100000 + Math.random() * 900000).toString();
+ 
+     await prisma.verificationCode.create({
+       data: {
+         code,
+         userId: createdUser.id,
+       },
+     });
+ 
+     await sendEmail(
+       createdUser.email,
+       'Next Pizza / 📝 Confirm your registration',
+       VerificationUserTemplate({
+         code,
+       }),
+     );
+   } catch (err) {
+     console.log('Error [CREATE_USER]', err);
      throw err;
    }
  }
