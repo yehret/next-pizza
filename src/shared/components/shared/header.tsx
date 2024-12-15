@@ -13,6 +13,7 @@ import { useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useSession, signIn } from 'next-auth/react';
 import { ProfileButton } from './profile-button';
+import { AuthModal } from './modals';
 
 interface Props {
   className?: string;
@@ -21,6 +22,8 @@ interface Props {
 }
 
 export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
+  const [openAuthModal, setOpenAuthModal] = React.useState(false);
+
    const { data: session } = useSession()
    const searchParams = useSearchParams();
    // const router = useRouter();
@@ -70,9 +73,10 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
-         {/* TODO: ADD SESSION LOADING SKELETON */}
+         <AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)} />
 
-          <ProfileButton />
+         {/* TODO: ADD SESSION LOADING SKELETON */}
+          <ProfileButton onClickSignIn={() => setOpenAuthModal(true)} />
 
           {hasCart && <div>
             <CartButton />
