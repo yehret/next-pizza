@@ -33,6 +33,8 @@
       "clsx": "^2.1.1",
       "lucide-react": "^0.453.0",
       "next": "15.0.1",
+      "next-auth": "^4.24.11",
+      "nextjs-toploader": "^3.7.15",
       "prisma": "^5.21.1",
       "qs": "^6.13.0",
       "react": "^18.3.1",

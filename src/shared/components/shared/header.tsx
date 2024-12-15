@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@/shared/lib/utils';
 import React from 'react';
 import { Container } from './container';
@@ -7,6 +9,10 @@ import { User } from 'lucide-react';
 import Link from 'next/link';
 import { CartButton } from './cart-button';
 import { SearchInput } from './search-input';
+import { useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { useSession, signIn } from 'next-auth/react';
+import { ProfileButton } from './profile-button';
 
 interface Props {
   className?: string;
@@ -15,6 +21,34 @@ interface Props {
 }
 
 export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
+   const { data: session } = useSession()
+   const searchParams = useSearchParams();
+   // const router = useRouter();
+   
+   console.log(session);
+   
+
+   React.useEffect(() => {
+      let toastMessage = '';
+
+      if (searchParams.has('paid')) {
+        toastMessage = 'Order successfully paid. Information has been sent to email.';
+      }
+  
+      if (searchParams.has('verified')) {
+        toastMessage = 'Email succenfully confirmed!';
+      }
+  
+      if (toastMessage) {
+        setTimeout(() => {
+         //  router.replace('/');
+          toast.success(toastMessage, {
+            duration: 3000,
+          });
+        }, 1000);
+      }
+   }, [])
+
   return (
     <header className={cn('border-b', className)}>
       <Container className="flex items-center justify-between py-8">
@@ -36,10 +70,9 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="flex items-center gap-1">
-            <User size={16} />
-            Sign In
-          </Button>
+         {/* TODO: ADD SESSION LOADING SKELETON */}
+
+          <ProfileButton />
 
           {hasCart && <div>
             <CartButton />

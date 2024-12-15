@@ -26,6 +26,7 @@ export { CheckoutSidebar } from './checkout-sidebar';
 export { RequiredSymbol } from './required-symbol';
 export { ClearButton } from './clear-button';
 export { ErrorText } from './error-text';
+export { Providers } from './providers'
 export * from './modals';
 export * from './checkout';
 export * from './form-components';

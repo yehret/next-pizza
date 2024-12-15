@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     // Get the order ID from the metadata in Stripe
     const orderId = body.data.object.metadata.orderId;
-    const PaymentIntent = body.data.object.payment_intent;
+    const paymentIntent = body.data.object.payment_intent;
 
     // Fetch the order from database using the order ID
     const order = await prisma.order.findFirst({
