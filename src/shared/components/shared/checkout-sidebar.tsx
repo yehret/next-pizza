@@ -13,7 +13,7 @@ interface Props {
 const TIP = 5;
 const DELIVERY_PRICE = 5;
 
-export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, className, loading }) => {
+export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, loading }) => {
 
    const tipPrice = (totalAmount * TIP) / 100;
    const totalPrice = totalAmount + DELIVERY_PRICE + tipPrice;

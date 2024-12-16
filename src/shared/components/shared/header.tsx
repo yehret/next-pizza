@@ -4,8 +4,6 @@ import { cn } from '@/shared/lib/utils';
 import React from 'react';
 import { Container } from './container';
 import Image from 'next/image';
-import { Button } from '../ui';
-import { User } from 'lucide-react';
 import Link from 'next/link';
 import { CartButton } from './cart-button';
 import { SearchInput } from './search-input';

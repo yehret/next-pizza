@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
 import { formLoginSchema, TFormLoginValues } from './schemas';
 import { Button } from '@/shared/components/ui';
 import { FormInput } from '../../../form-components';
 import { Title } from '../../../title';
 import toast from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
 interface Props {
    onClose?: VoidFunction;

@@ -14,7 +14,7 @@ interface Props {
    loading?: boolean;
 }
 
-export const CheckoutCart: React.FC<Props> = ({ loading, items, onClickCountButton, removeCartItem, className }) => {
+export const CheckoutCart: React.FC<Props> = ({ loading, items, onClickCountButton, removeCartItem }) => {
    return (
       <WhiteBlock title="1. Cart">
          <div className="flex flex-col gap-5">

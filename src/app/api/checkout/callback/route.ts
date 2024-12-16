@@ -2,7 +2,6 @@
 import { sendEmail } from '@/shared/lib';
 import { OrderStatus } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
-import { StripePaymentCallbackData } from '../../../../../@types/stripe';
 import { prisma } from '../../../../../prisma/prisma-client';
 import { CartItemDTO } from '@/shared/services/dto/cart-dto';
 import { OrderSuccessTemplate } from '@/shared/components/shared/email-templates/order-success';
@@ -15,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     // Get the order ID from the metadata in Stripe
     const orderId = body.data.object.metadata.orderId;
-    const paymentIntent = body.data.object.payment_intent;
+   //  const paymentIntent = body.data.object.payment_intent;
 
     // Fetch the order from database using the order ID
     const order = await prisma.order.findFirst({

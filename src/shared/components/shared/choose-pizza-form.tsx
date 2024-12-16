@@ -27,7 +27,6 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   items,
   imageUrl,
   ingredients,
-  onClickAddCart,
   onSubmit,
   className,
   loading
